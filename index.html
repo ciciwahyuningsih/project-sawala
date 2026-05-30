@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cii's Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        /* --- RESET & BASE STYLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #333;
+        }
+
+        /* --- NAVBAR --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            border-bottom: 1px solid #e0e0e0;
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 1000;
+        }
+
+        .logo {
+            color: #001cd2;
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            margin: 0 15px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #001cd2;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .search-bar {
+            padding: 8px 15px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            background-color: #f0f0f0;
+            outline: none;
+        }
+
+        .cart-icon-wrapper {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .cart-icon {
+            font-size: 20px;
+            color: #333;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: red;
+            color: white;
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+
+        /* --- HERO BANNER --- */
+        .hero {
+            background-color: #001cd2;
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+        }
+
+        .hero h1 {
+            font-size: 28px;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 16px;
+            margin-bottom: 25px;
+            opacity: 0.9;
+        }
+
+        .btn-kontak {
+            background-color: white;
+            color: #001cd2;
+            border: none;
+            padding: 10px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 20px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.2s, background-color 0.3s;
+        }
+
+        .btn-kontak:hover {
+            transform: scale(1.05);
+            background-color: #f0f0f0;
+        }
+
+        /* --- KATEGORI POPULER --- */
+        .kategori-section {
+            padding: 60px 10%;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .section-header h2 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        #tampilkan-semua-btn {
+            color: #001cd2;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        .kategori-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .kategori-item {
+            border: 1px solid #ddd;
+            padding: 25px 15px;
+            text-align: center;
+            border-radius: 8px;
+            background: #fff;
+            min-height: 170px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        /* Style sewaktu tombol kategori aktif dipilih */
+        .kategori-item:hover, .kategori-item.active {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 28, 210, 0.2);
+            border-color: #001cd2;
+            background-color: #f4f6ff;
+        }
+
+        .kategori-item img {
+            max-height: 85px;
+            max-width: 100%;
+            object-fit: contain;
+            margin-bottom: 15px;
+        }
+
+        .kategori-item p {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* --- PRODUK SECTION --- */
+        .produk-section {
+            background-color: #001cd2;
+            padding: 60px 10%;
+            color: white;
+        }
+
+        .produk-header-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .produk-section h2 {
+            font-size: 24px;
+        }
+
+        .btn-reset-filter {
+            background-color: white;
+            color: #001cd2;
+            border: none;
+            padding: 6px 15px;
+            font-size: 13px;
+            font-weight: bold;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .btn-reset-filter:hover {
+            opacity: 0.9;
+        }
+
+        .produk-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        /* Menyembunyikan semua secara default via CSS, penanganan pertamanya via window.onload JavaScript */
+        .produk-card {
+            display: none; 
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            color: #333;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .produk-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        .img-container {
+            background-color: #dbdbdb;
+            height: 220px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            cursor: pointer;
+        }
+
+        .img-container img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        .produk-info {
+            padding: 15px;
+        }
+
+        .produk-info h3 {
+            font-size: 15px;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+
+        .produk-info h3:hover {
+            color: #001cd2;
+        }
+
+        .harga {
+            color: #001cd2;
+            font-weight: bold;
+            font-size: 15px;
+            margin-bottom: 15px;
+        }
+
+        .btn-keranjang {
+            width: 100%;
+            background-color: #001cd2;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 13px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+
+        .btn-keranjang:hover {
+            background-color: #00159e;
+        }
+
+        /* --- POP-UP MODAL DETAIL PRODUK --- */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+            text-align: center;
+            color: #333;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #888;
+        }
+
+        .modal-img {
+            max-height: 200px;
+            object-fit: contain;
+            margin-bottom: 15px;
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .modal-desc {
+            font-size: 14px;
+            color: #666;
+            margin: 15px 0;
+            text-align: justify;
+            line-height: 1.5;
+        }
+
+        /* --- POP-UP OVERLAY KERANJANG BELANJA --- */
+        .cart-modal {
+            display: none;
+            position: fixed;
+            z-index: 3000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: flex-end;
+            align-items: flex-start;
+        }
+
+        .cart-modal-content {
+            background-color: white;
+            width: 100%;
+            max-width: 450px;
+            height: 100%;
+            padding: 30px;
+            box-shadow: -4px 0 15px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        .cart-modal-content h2 {
+            font-size: 20px;
+            border-bottom: 2px solid #001cd2;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            color: #001cd2;
+        }
+
+        .cart-list {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            list-style: none;
+        }
+
+        .cart-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px dashed #ccc;
+            font-size: 14px;
+        }
+
+        .total-pembayaran {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 25px;
+            color: #001cd2;
+        }
+
+        .metode-bayar-box {
+            margin-bottom: 25px;
+        }
+
+        .metode-bayar-box label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .metode-bayar-box select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        .btn-beli {
+            width: 100%;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-beli:hover {
+            background-color: #218838;
+        }
+
+        /* --- KONTAK SECTION --- */
+        .kontak-section {
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .kontak-section h2 {
+            font-size: 24px;
+            margin-bottom: 25px;
+        }
+
+        .kontak-form {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .kontak-form input, 
+        .kontak-form textarea {
+            width: 100%;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            background-color: #a4afff;
+            color: #333;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .btn-kirim {
+            background-color: #a4afff;
+            color: #000;
+            border: none;
+            padding: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 20px;
+            cursor: pointer;
+            width: 150px;
+            margin: 10px auto 0;
+            border: 1px solid #888;
+            transition: background-color 0.2s;
+        }
+
+        .btn-kirim:hover {
+            background-color: #8c9aff;
+        }
+
+        /* --- FOOTER --- */
+        .footer {
+            background-color: #001cd2;
+            color: white;
+            padding: 40px 5%;
+            font-size: 15px;
+            border-top: 3px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .footer-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 25px;
+            text-align: center;
+        }
+
+        .footer-lokasi {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-size: 16px;
+            font-weight: 500;
+            width: 100%;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .footer-sosmed-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px; 
+            width: 100%;
+        }
+
+        .footer-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: opacity 0.2s;
+        }
+
+        .footer-item:hover {
+            opacity: 0.8;
+        }
+
+        .footer-item i {
+            font-size: 20px;
+            color: #fff;
+        }
+
+        /* --- RESPONSIVE STYLES --- */
+        @media (max-width: 992px) {
+            .kategori-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+            .produk-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-sosmed-group { flex-direction: column; gap: 15px; }
+        }
+
+        @media (max-width: 600px) {
+            .navbar { flex-direction: column; gap: 10px; }
+            .nav-links { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+            .nav-links a { margin: 0 5px; }
+            .kategori-grid { grid-template-columns: repeat(2, 1fr); }
+            .produk-grid { grid-template-columns: repeat(1, 1fr); }
+            .kategori-section, .produk-section { padding: 40px 5%; }
+            .footer-lokasi { font-size: 14px; }
+            .cart-modal-content { max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">Cii's Store</div>
+        <nav class="nav-links">
+            <a href="#beranda">Beranda</a>
+            <a href="#kategori">Kategori</a>
+            <a href="#produk">Produk</a>
+            <a href="#kontak">Kontak</a>
+        </nav>
+        <div class="nav-right">
+             <input type="text" id="cari-produk-input" onkeydown="cekEnter(event)" placeholder="Cari nama produk..." class="search-bar">
+            <div class="cart-icon-wrapper" onclick="bukaKeranjang()">
+                <i class="fas fa-shopping-cart cart-icon"></i>
+                <span class="cart-count" id="jumlah-keranjang">0</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero" id="beranda">
+        <h1>SELAMAT DATANG DI CII'S STORE!</h1>
+        <p>Temukan produk pilihan anda di Cii's Store</p>
+        <a href="#kontak" class="btn-kontak">Kontak</a>
+    </section>
+
+    <section class="kategori-section" id="kategori">
+        <div class="section-header">
+            <h2>Kategori Populer</h2>
+            <span id="tampilkan-semua-btn">Tampilkan semua</span>
+        </div>
+        
+        <div class="kategori-grid">
+            <div class="kategori-item" id="kategori-fashion" onclick="filterKategori('fashion', this)"><img src="d:\PKL\FOTO\foto baru\fashion.jpg" alt="Fashion"><p>Fashion</p></div>
+            <div class="kategori-item" onclick="filterKategori('elektronik', this)"><img src="d:\PKL\FOTO\foto baru\elektronik.jpg" alt="Elektronik"><p>Elektronik</p></div>
+            <div class="kategori-item" onclick="filterKategori('furniture', this)"><img src="d:\PKL\FOTO\foto baru\furniture.jpg" alt="Furniture"><p>Furniture</p></div>
+            <div class="kategori-item" onclick="filterKategori('hobi', this)"><img src="d:\PKL\FOTO\foto baru\hobi.jpg" alt="Hobi & Mainan"><p>Hobi & Mainan</p></div>
+
+            <div class="kategori-item sisa-kategori hidden" onclick="filterKategori('kecantikan', this)"><img src="d:\PKL\FOTO\foto baru\kecantikan.jpg" alt="Kecantikan"><p>Kecantikan</p></div>
+            <div class="kategori-item sisa-kategori hidden" onclick="filterKategori('olahraga', this)"><img src="d:\PKL\FOTO\foto baru\olahraga.jpg" alt="Olahraga"><p>Olahraga</p></div>
+            <div class="kategori-item sisa-kategori hidden" onclick="filterKategori('rumah', this)"><img src="d:\PKL\FOTO\foto baru\rumah.jpg" alt="Rumah"><p>Rumah</p></div>
+            <div class="kategori-item sisa-kategori hidden" onclick="filterKategori('sekolah', this)"><img src="d:\PKL\FOTO\foto baru\sekolah.jpg" alt="Sekolah"><p>Sekolah</p></div>
+        </div>
+    </section>
+
+    <section class="produk-section" id="produk">
+        <div class="produk-header-box">
+            <h2 id="judul-produk-section">Produk Toko</h2>
+            <button class="btn-reset-filter" onclick="resetFilterKategori()">Tampilkan Semua</button>
+        </div>
+        
+        <div class="produk-grid" id="container-semua-produk">
+            
+            <div class="produk-card" data-kategori="fashion">
+                <div class="img-container" onclick="bukaModal('Cardigan Rajut', 185000, 'images/cardiganbg.png', 'Cardigan rajut premium bergaya Korea. Bahan tebal, lembut, adem, dan sangat nyaman digunakan.')">
+                    <img src="d:\PKL\katalog produk\images\cardiganbg.png" alt="Cardigan">
+                </div>
+                <div class="produk-info">
+                    <h3 onclick="bukaModal('Cardigan Rajut', 185000, 'images/cardiganbg.png', 'Cardigan rajut premium bergaya Korea.')">Cardigan Rajut</h3>
+                    <p class="harga">RP.185.000</p>
+                    <button class="btn-keranjang" onclick="tambahKeKeranjang('Cardigan Rajut', 185000)">+ Keranjang</button>
+                </div>
+            </div>
+
+            <!-- LOOSE JEANS -->
+<div class="produk-card" data-kategori="fashion">
+    <div class="img-container" onclick="bukaModal('Loose Jeans', 225000, 'images/jeans2bg.png', 'Celana loose jeans denim dengan potongan lurus dan longgar yang trendi.')">
+        <img src="d:\PKL\katalog produk\images\jeans2bg.png" alt="Loose Jeans">
+    </div>
+    <div class="produk-info">
+        <h3 onclick="bukaModal('Loose Jeans', 225000, 'images/jeans2bg.png', 'Celana loose jeans denim dengan potongan lurus dan longgar yang trendi.')">Loose Jeans</h3>
+        <p class="harga">RP.225.000</p>
+        <button class="btn-keranjang" onclick="tambahKeKeranjang('Loose Jeans', 225000)">+ Keranjang</button>
+    </div>
+</div>
+
+            <div class="produk-card" data-kategori="fashion">
+                <div class="img-container" onclick="bukaModal('Rok Bunga Korean Style', 85000, 'images/rok1bg.png', 'Rok panjang motif bunga mini manis dengan aksen ruffle menawan.')">
+                    <img src="d:\PKL\katalog produk\images\rok1bg.png" alt="Rok Bunga">
+                </div>
+                <div class="produk-info">
+                    <h3 onclick="bukaModal('Rok Bunga Korean Style', 85000, 'images/rok1bg.png', 'Rok panjang motif bunga mini manis.')">Rok Bunga Korean Style</h3>
+                    <p class="harga">RP.85.000</p>
+                    <button class="btn-keranjang" onclick="tambahKeKeranjang('Rok Bunga Korean Style', 85000)">+ Keranjang</button>
+                </div>
+            </div>
+
+            <div class="produk-card" data-kategori="fashion">
+                <div class="img-container" onclick="bukaModal('Tas Wanita', 185000, 'images/tas3bg.png', 'Tas selempang wanita dengan desain yang simple,menarik,dan unik.')">
+                    <img src="d:\PKL\katalog produk\images\tas3bg.png" alt="tas">
+                </div>
+                <div class="produk-info">
+                    <h3 onclick="bukaModal('Rok Bunga Korean Style', 185000, 'images/tas3bg.png', 'tas selempang wanita.')">tas selempang wanita</h3>
+                    <p class="harga">RP.185.000</p>
+                    <button class="btn-keranjang" onclick="tambahKeKeranjang('Tas Wanita', 185000)">+ Keranjang</button>
+                </div>
+            </div>
+
+            <div class="produk-card" data-kategori="fashion">
+                <div class="img-container" onclick="bukaModal('Tas Selempang Wanita', 190000, 'images/tas1bg.png', 'Tas selempang wanita bahan kulit sintetis premium, tebal, awet, dan cocok untuk pesta atau hangout.')">
+                    <img src="d:\PKL\FOTO\fotobg\tas1bg.png" alt="Tas">
+                </div>
+                <div class="produk-info">
+                    <h3 onclick="bukaModal('Tas Selempang Wanita', 190000, 'images/tas1bg.png', 'Tas selempang wanita premium.')">Tas Selempang perempuan</h3>
+                    <p class="harga">RP.190.000</p>
+                    <button class="btn-keranjang" onclick="tambahKeKeranjang('Tas Selempang Wanita', 190000)">+ Keranjang</button>
+                </div>
+            </div>
+
+            <div class="produk-card" data-kategori="fashion">
+                <div class="img-container" onclick="bukaModal('kemeja wanita lengan penjang', 120000, 'images/kemeja2bg.png', 'Kemeja wanita lengan panjang dengan bahan katun premiun yang lembut.')">
+                    <img src="d:\PKL\katalog produk\images\kemeja2bg.png" alt="Kemeja">
+                </div>
+                <div class="produk-info">
+                    <h3 onclick="bukaModal('Tas Selempang Wanita', 120000, 'images/tas1bg.png', 'Tas selempang wanita premium.')">Kemeja Wanita</h3>
+                    <p class="harga">RP.120.000</p>
+                    <button class="btn-keranjang" onclick="tambahKeKeranjang('kemeja Wanita lengan panjang', 120000)">+ Keranjang</button>
+                </div>
+            </div>
+
+            <div class="produk-card" data-kategori="elektronik">
+                <div class="img-container" onclick="bukaModal('Earphone Bluetooth Wireless', 250000, 'images/earphone.png', 'Earphone TWS dengan suara bass yang jernih, koneksi bluetooth stabil, dan baterai tahan lama.')">
+                    <img src="d:\PKL\katalog produk\images\earphone.png" alt="Earphone">
+                </div>
+                <div class="produk-info">
+                    <h3 onclick="bukaModal('Earphone Bluetooth Wireless', 250000, 'images/earphone.png', 'Earphone TWS Bass Jernih.')">Earphone Bluetooth</h3>
+                    <p class="harga">RP.250.000</p>
+                    <button class="btn-keranjang" onclick="tambahKeKeranjang('Earphone Bluetooth Wireless', 250000)">+ Keranjang</button>
+                </div>
+            </div>
+
+            <div class="produk-card" data-kategori="elektronik">
+                <div class="img-container" onclick="bukaModal('Earphone Bluetooth Wireless', 350000, 'images/headphone.png', 'Headphone bluetooth dengan suara bass yang jernih, koneksi bluetooth stabil, dan baterai tahan lama.')">
+                    <img src="d:\PKL\katalog produk\images\headphone.png" alt="Headphone">
+                </div>
+                <div class="produk-info">
+                    <h3 onclick="bukaModal('Headphone Bluetooth', 350000, 'images/headphone.png', 'Headphone Bass Jernih.')">Headphone Bluetooth</h3>
+                    <p class="harga">RP.350.000</p>
+                    <button class="btn-keranjang" onclick="tambahKeKeranjang('Headphone Bluetooth', 350000)">+ Keranjang</button>
+                </div>
+            </div>
+
+            <div class="produk-card" data-kategori="elektronik">
+                <div class="img-container" onclick="bukaModal('iphone 15', 12000000, 'images/iphone15.png', 'Iphone 15 dengan kamera 48 MP.')">
+                    <img src="d:\PKL\katalog produk\images\iphone15.png" alt="iphone 15">
+                </div>
+                <div class="produk-info">
+                    <h3 onclick="bukaModal('Earphone Bluetooth Wireless', 12000000, 'images/iphone15.png', 'iphone 15.')">Iphone 15</h3>
+                    <p class="harga">RP.12.000.000</p>
+                    <button class="btn-keranjang" onclick="tambahKeKeranjang('iphone 15', 12000000)">+ Keranjang</button>
+                </div>
+            </div>
+
+            <div class="produk-card" data-kategori="elektronik">
+                <div class="img-container" onclick="bukaModal('Apple MacBook Pro', 46000000, 'images/macbook.png', 'Apple MacBook Pro (16 inci,M3 Pro) 36 GB/512 GB.')">
+                    <img src="d:\PKL\katalog produk\images\macbook.png" alt="macbook pro">
+                </div>
+                <div class="produk-info">
+                    <h3 onclick="bukaModal('Apple MacBook Pro', 46000000, 'images/macbook.png', 'Apple MacBook Pro.')">Apple MacBook Pro</h3>
+                    <p class="harga">RP.46.000.000</p>
+                    <button class="btn-keranjang" onclick="tambahKeKeranjang('Apple MacBook Pro', 46000000)">+ Keranjang</button>
+                </div>
+            </div>
+
+            <div class="produk-card" data-kategori="elektronik">
+                <div class="img-container" onclick="bukaModal('Kamera sony', 6500000, 'images/kamera.png', 'Kamera sony a7s menghasilkan foto yang jernih dan halus serta harga yang ramah di kantong anda.')">
+                    <img src="d:\PKL\katalog produk\images\kamera.png" alt="kamera">
+                </div>
+                <div class="produk-info">
+                    <h3 onclick="bukaModal('Kamera sony', 6500000, 'images/kamera.png', 'Kamera sony.')">Kamera Sony a7s</h3>
+                    <p class="harga">RP.6.500.000</p>
+                    <button class="btn-keranjang" onclick="tambahKeKeranjang('Kamera sony', 6500000)">+ Keranjang</button>
+                </div>
+            </div>
+
+            <div class="produk-card" data-kategori="elektronik">
+                <div class="img-container" onclick="bukaModal('Printer Canon', 250000, 'images/printer.png', 'Resolusi scanner:600x1.200 dpi,Power:AC 100-240 V,50/60 Hz.')">
+                    <img src="d:\PKL\katalog produk\images\printer.png" alt="Printer">
+                </div>
+                <div class="produk-info">
+                    <h3 onclick="bukaModal('Printer Canon', 250000, 'images/printer.png', 'Printer Canon.')">Printer Canon E470</h3>
+                    <p class="harga">RP.250.000</p>
+                    <button class="btn-keranjang" onclick="tambahKeKeranjang('Printer Canon', 250000)">+ Keranjang</button>
+                </div>
+            </div>
+
+            <div class="produk-card" data-kategori="furniture">
+                <div class="img-container" onclick="bukaModal('Meja belajar kayu', 3000000, 'images/meja belajar.png', 'Meja belajar kayu yang kuat di pakai jangka panjang.')">
+                    <img src="d:\PKL\katalog produk\images\meja belajar.png" alt="meja belajar">
+                </div>
+                <div class="produk-info">
+                    <h3 onclick="bukaModal('Meja belajar kayu', 3000000, 'images/meja belajar.png', 'Meja belajar kayu.')">Meja belajar aesthetic</h3>
+                    <p class="harga">RP.3.000.000</p>
+                    <button class="btn-keranjang" onclick="tambahKeKeranjang('Meja belajar kayu', 3000000)">+ Keranjang</button>
+                </div>
+            </div>
+
+            <div class="produk-card" data-kategori="furniture">
+                <div class="img-container" onclick="bukaModal('Meja makan kayu', 4500000, 'images/meja makan.png', 'Meja makan yang terbuat dari kayu jati dan sudah di jamin kekuatan nya dan sudah satu set dengan 4 kursi.')">
+                    <img src="d:\PKL\katalog produk\images\meja makan.png" alt="meja makan">
+                </div>
+                <div class="produk-info">
+                    <h3 onclick="bukaModal('Meja makan kayu', 4500000, 'images/meja makan.png', 'Meja makan kayu.')">Meja makan 4 kursi</h3>
+                    <p class="harga">RP.4.500.000</p>
+                    <button class="btn-keranjang" onclick="tambahKeKeranjang('Meja makan kayu', 4500000)">+ Keranjang</button>
+                </div>
+            </div>
+
+            <div class="produk-card" data-kategori="furniture">
+    <div class="img-container" onclick="bukaModal('Meja Rias', 1250000, 'images/meja rias.png', 'Meja rias minimalis dengan cermin besar dan laci penyimpanan yang luas.')">
+        <img src="d:\PKL\katalog produk\images\meja rias.png" alt="Meja Rias">
+    </div>
+    <div class="produk-info">
+        <h3 onclick="bukaModal('Meja Rias', 1250000, 'images/meja rias.png', 'Meja rias minimalis.')">Meja Rias</h3>
+        <p class="harga">RP.1.250.000</p>
+        <button class="btn-keranjang" onclick="tambahKeKeranjang('Meja Rias', 1250000)">+ Keranjang</button>
+    </div>
+</div>
+
+<div class="produk-card" data-kategori="furniture">
+    <div class="img-container" onclick="bukaModal('Rak Buku', 350000, 'images/rak buku.png', 'Rak buku serbaguna kayu minimalis untuk merapikan koleksi buku Anda.')">
+        <img src="d:\PKL\katalog produk\images\rak buku.png" alt="Rak Buku">
+    </div>
+    <div class="produk-info">
+        <h3 onclick="bukaModal('Rak Buku', 350000, 'images/rak buku.png', 'Rak buku serbaguna.')">Rak Buku</h3>
+        <p class="harga">RP.350.000</p>
+        <button class="btn-keranjang" onclick="tambahKeKeranjang('Rak Buku', 350000)">+ Keranjang</button>
+    </div>
+</div>
+
+<div class="produk-card" data-kategori="furniture">
+    <div class="img-container" onclick="bukaModal('Rak Sepatu', 180000, 'images/rak sepatu.png', 'Rak sepatu portable yang kokoh, muat banyak pasang sepatu dan hemat tempat.')">
+        <img src="d:\PKL\katalog produk\images\rak sepatu.png" alt="Rak Sepatu">
+    </div>
+    <div class="produk-info">
+        <h3 onclick="bukaModal('Rak Sepatu', 180000, 'images/rak sepatu.png', 'Rak sepatu portable.')">Rak Sepatu</h3>
+        <p class="harga">RP.180.000</p>
+        <button class="btn-keranjang" onclick="tambahKeKeranjang('Rak Sepatu', 180000)">+ Keranjang</button>
+    </div>
+</div>
+
+<div class="produk-card" data-kategori="furniture">
+    <div class="img-container" onclick="bukaModal('Sofa Ruang Tamu', 2500000, 'images/sofa ruang tamu.png', 'Sofa ruang tamu premium dengan busa empuk dan kain lembut, cocok untuk berkumpul keluarga.')">
+        <img src="d:\PKL\katalog produk\images\sofa ruang tamu.png" alt="Sofa Ruang Tamu">
+    </div>
+    <div class="produk-info">
+        <h3 onclick="bukaModal('Sofa Ruang Tamu', 2500000, 'images/sofa ruang tamu.png', 'Sofa ruang tamu premium.')">Sofa Ruang Tamu</h3>
+        <p class="harga">RP.2.500.000</p>
+        <button class="btn-keranjang" onclick="tambahKeKeranjang('Sofa Ruang Tamu', 2500000)">+ Keranjang</button>
+    </div>
+</div>
+
+<div class="produk-card" data-kategori="hobi">
+    <div class="img-container" onclick="bukaModal('Benang Rajut', 15000, 'images/benang.png', 'Benang rajut katun lembut berkualitas tinggi, tersedia dalam berbagai varian warna cerah.')">
+        <img src="d:\PKL\katalog produk\images\benang.png" alt="Benang Rajut">
+    </div>
+    <div class="produk-info">
+        <h3 onclick="bukaModal('Benang Rajut', 15000, 'images/benang.png', 'Benang rajut katun.')">Benang Rajut</h3>
+        <p class="harga">RP.15.000</p>
+        <button class="btn-keranjang" onclick="tambahKeKeranjang('Benang Rajut', 15000)">+ Keranjang</button>
+    </div>
+</div>
+
+<div class="produk-card" data-kategori="hobi">
+    <div class="img-container" onclick="bukaModal('Boneka Rajut Amigurumi', 75000, 'images/boneka rajut.png', 'Boneka rajut buatan tangan (handmade) yang lucu dan cocok untuk hadiah atau pajangan.')">
+        <img src="d:\PKL\katalog produk\images\boneka rajut.png" alt="Boneka Rajut">
+    </div>
+    <div class="produk-info">
+        <h3 onclick="bukaModal('Boneka Rajut Amigurumi', 75000, 'images/boneka rajut.png', 'Boneka rajut buatan tangan.')">Boneka Rajut</h3>
+        <p class="harga">RP.75.000</p>
+        <button class="btn-keranjang" onclick="tambahKeKeranjang('Boneka Rajut Amigurumi', 75000)">+ Keranjang</button>
+    </div>
+</div>
+
+<div class="produk-card" data-kategori="hobi">
+    <div class="img-container" onclick="bukaModal('Boneka Teddy Bear', 120000, 'images/teddy bear.png', 'Boneka beruang besar yang halus, empuk, dan sangat nyaman dipeluk.')">
+        <img src="d:\PKL\katalog produk\images\teddy bear.png" alt="Teddy Bear">
+    </div>
+    <div class="produk-info">
+        <h3 onclick="bukaModal('Boneka Teddy Bear', 120000, 'images/teddy bear.png', 'Boneka beruang halus.')">Boneka Teddy Bear</h3>
+        <p class="harga">RP.120.000</p>
+        <button class="btn-keranjang" onclick="tambahKeKeranjang('Boneka Teddy Bear', 120000)">+ Keranjang</button>
+    </div>
+</div>
+
+<div class="produk-card" data-kategori="hobi">
+    <div class="img-container" onclick="bukaModal('Mobil Remot Kontrol', 250000, 'images/mobil remot.png', 'Mobil RC offroad tangguh dengan kendali responsif tinggi dan baterai tahan lama.')">
+        <img src="d:\PKL\katalog produk\images\mobil remot.png" alt="Mobil Remot Kontrol">
+    </div>
+    <div class="produk-info">
+        <h3 onclick="bukaModal('Mobil Remot Kontrol', 250000, 'images/mobil remot.png', 'Mobil RC offroad tangguh.')">Mobil Remot Kontrol</h3>
+        <p class="harga">RP.250.000</p>
+        <button class="btn-keranjang" onclick="tambahKeKeranjang('Mobil Remot Kontrol', 250000)">+ Keranjang</button>
+    </div>
+</div>
+
+<div class="produk-card" data-kategori="hobi">
+    <div class="img-container" onclick="bukaModal('Hot Wheels Kolektor', 35000, 'images/hot wheels.png', 'Mainan mobil diecast Hot Wheels original dengan detail presisi skala 1:64.')">
+        <img src="d:\PKL\katalog produk\images\hot wheels.png" alt="Hot Wheels">
+    </div>
+    <div class="produk-info">
+        <h3 onclick="bukaModal('Hot Wheels Kolektor', 35000, 'images/hot wheels.png', 'Mainan mobil diecast.')">Hot Wheels</h3>
+        <p class="harga">RP.35.000</p>
+        <button class="btn-keranjang" onclick="tambahKeKeranjang('Hot Wheels Kolektor', 35000)">+ Keranjang</button>
+    </div>
+</div>
+
+<div class="produk-card" data-kategori="hobi">
+    <div class="img-container" onclick="bukaModal('Lego Creative Block', 450000, 'images/lego.png', 'Set mainan susun balok Lego untuk mengasah kreativitas dan imajinasi anak maupun dewasa.')">
+        <img src="d:\PKL\katalog produk\images\lego.png" alt="Lego">
+    </div>
+    <div class="produk-info">
+        <h3 onclick="bukaModal('Lego Creative Block', 450000, 'images/lego.png', 'Set mainan susun balok.')">Lego</h3>
+        <p class="harga">RP.450.000</p>
+        <button class="btn-keranjang" onclick="tambahKeKeranjang('Lego Creative Block', 450000)">+ Keranjang</button>
+    </div>
+</div>
+
+<div class="produk-card" data-kategori="kecantikan">
+    <div class="img-container" onclick="bukaModal('Bedak Glad2Glow', 45000, 'images/bedak.png', 'Bedak padat Glad2Glow yang ringan, mengontrol minyak berlebih, dan memberikan hasil matte natural.')">
+        <img src="d:\PKL\katalog produk\images\bedakg2g.png" alt="Bedak">
+    </div>
+    <div class="produk-info">
+        <h3 onclick="bukaModal('Bedak Glad2Glow', 45000, 'images/bedak.png', 'Bedak padat Glad2Glow.')">Bedak Glad2Glow</h3>
+        <p class="harga">RP.45.000</p>
+        <button class="btn-keranjang" onclick="tambahKeKeranjang('Bedak Glad2Glow', 45000)">+ Keranjang</button>
+    </div>
+</div>
+
+<div class="produk-card" data-kategori="kecantikan">
+    <div class="img-container" onclick="bukaModal('Cushion Foundation', 110000, 'images/cushion.png', 'Cushion dengan coverage tinggi, menyamarkan noda hitam, dan tahan lama seharian.')">
+        <img src="d:\PKL\katalog produk\images\cushion.png" alt="Cushion">
+    </div>
+    <div class="produk-info">
+        <h3 onclick="bukaModal('Cushion Foundation', 110000, 'images/cushion.png', 'Cushion coverage tinggi.')">Cushion Foundation</h3>
+        <p class="harga">RP.110.000</p>
+        <button class="btn-keranjang" onclick="tambahKeKeranjang('Cushion Foundation', 110000)">+ Keranjang</button>
+    </div>
+</div>
+
+<div class="produk-card" data-kategori="kecantikan">
+    <div class="img-container" onclick="bukaModal('Lip Cream Matte', 55000, 'images/lips.png', 'Pewarna bibir dengan formula transferproof, warna intens sekali oles, dan tidak bikin kering.')">
+        <img src="d:\PKL\katalog produk\images\lips.png" alt="Lip Cream">
+    </div>
+    <div class="produk-info">
+        <h3 onclick="bukaModal('Lip Cream Matte', 55000, 'images/lips.png', 'Pewarna bibir transferproof.')">Lip Cream Matte</h3>
+        <p class="harga">RP.55.000</p>
+        <button class="btn-keranjang" onclick="tambahKeKeranjang('Lip Cream Matte', 55000)">+ Keranjang</button>
+    </div>
+</div>
+
+<div class="produk-card" data-kategori="kecantikan">
+    <div class="img-container" onclick="bukaModal('Mascara Waterproof', 65000, 'images/mascara.png', 'Mascara pelentik bulu mata anti air, membuat bulu mata tampak bervolume dan tebal alami.')">
+        <img src="d:\PKL\katalog produk\images\mascara.png" alt="Mascara">
+    </div>
+    <div class="produk-info">
+        <h3 onclick="bukaModal('Mascara Waterproof', 65000, 'images/mascara.png', 'Mascara pelentik bulu mata.')">Mascara Waterproof</h3>
+        <p class="harga">RP.65.000</p>
+        <button class="btn-keranjang" onclick="tambahKeKeranjang('Mascara Waterproof', 65000)">+ Keranjang</button>
+    </div>
+</div>
+
+<div class="produk-card" data-kategori="kecantikan">
+    <div class="img-container" onclick="bukaModal('Moisturizer Gel', 80000, 'images/moisturizer.png', 'Pelembap wajah bertekstur gel ringan yang cepat meresap dan memperkuat skin barrier.')">
+        <img src="d:\PKL\katalog produk\images\moisturizer.png" alt="Moisturizer">
+    </div>
+    <div class="produk-info">
+        <h3 onclick="bukaModal('Moisturizer Gel', 80000, 'images/moisturizer.png', 'Pelembap wajah teksur gel.')">Moisturizer Gel</h3>
+        <p class="harga">RP.80.000</p>
+        <button class="btn-keranjang" onclick="tambahKeKeranjang('Moisturizer Gel', 80000)">+ Keranjang</button>
+    </div>
+</div>
+
+<div class="produk-card" data-kategori="kecantikan">
+    <div class="img-container" onclick="bukaModal('Serum Glowing Face', 95000, 'images/serum.png', 'Serum pencerah wajah dengan kandungan aktif untuk menyamarkan noda hitam dan bikin glowing.')">
+        <img src="d:\PKL\katalog produk\images\serum.png" alt="Serum">
+    </div>
+    <div class="produk-info">
+        <h3 onclick="bukaModal('Serum Glowing Face', 95000, 'images/serum.png', 'Serum pencerah wajah.')">Serum Glowing</h3>
+        <p class="harga">RP.95.000</p>
+        <button class="btn-keranjang" onclick="tambahKeKeranjang('Serum Glowing Face', 95000)">+ Keranjang</button>
+    </div>
+</div>
+
+<div class="produk-card" data-kategori="olahraga">
+    <div class="img-container" onclick="bukaModal('Barbel Dumbbell 5kg', 85000, 'images/barbel.png', 'Barbel dumbbell lapisan karet anti slip, sangat nyaman untuk latihan beban di rumah.')">
+        <img src="d:\PKL\katalog produk\images\barbel.png" alt="Barbel">
+    </div>
+    <div class="produk-info">
+        <h3 onclick="bukaModal('Barbel Dumbbell 5kg', 85000, 'images/barbel.png', 'Barbel dumbbell lapisan karet.')">Barbel Dumbbell</h3>
+        <p class="harga">RP.85.000</p>
+        <button class="btn-keranjang" onclick="tambahKeKeranjang('Barbel Dumbbell 5kg', 85000)">+ Keranjang</button>
+    </div>
+</div>
+
+<div class="produk-card" data-kategori="olahraga">
+    <div class="img-container" onclick="bukaModal('Raket Badminton Carbon', 350000, 'images/raket.png', 'Raket badminton berbahan carbon composite yang ringan dan kuat untuk smash maksimal.')">
+        <img src="d:\PKL\katalog produk\images\raket.png" alt="Raket">
+    </div>
+    <div class="produk-info">
+        <h3 onclick="bukaModal('Raket Badminton Carbon', 350000, 'images/raket.png', 'Raket badminton berbahan carbon.')">Raket Badminton</h3>
+        <p class="harga">RP.350.000</p>
+        <button class="btn-keranjang" onclick="tambahKeKeranjang('Raket Badminton Carbon', 350000)">+ Keranjang</button>
+    </div>
+</div>
+
+<div class="produk-card" data-kategori="olahraga">
+    <div class="img-container" onclick="bukaModal('Sepatu Olahraga Running', 299000, 'images/sepatu olga.png', 'Sepatu running dengan teknologi sol empuk, meminimalkan cedera saat lari atau berolahraga.')">
+        <img src="d:\PKL\katalog produk\images\sepatu olga.png" alt="Sepatu Olahraga">
+    </div>
+    <div class="produk-info">
+        <h3 onclick="bukaModal('Sepatu Olahraga Running', 299000, 'images/sepatu olga.png', 'Sepatu running sol empuk.')">Sepatu Olahraga</h3>
+        <p class="harga">RP.299.000</p>
+        <button class="btn-keranjang" onclick="tambahKeKeranjang('Sepatu Olahraga Running', 299000)">+ Keranjang</button>
+    </div>
+</div>
+
+<div class="produk-card" data-kategori="olahraga">
+    <div class="img-container" onclick="bukaModal('Treadmill Elektrik', 3800000, 'images/treadmill.png', 'Treadmill elektrik lipat dilengkapi monitor digital penunjuk kalori, waktu, dan kecepatan.')">
+        <img src="d:\PKL\katalog produk\images\treadmill.png" alt="Treadmill">
+    </div>
+    <div class="produk-info">
+        <h3 onclick="bukaModal('Treadmill Elektrik', 3800000, 'images/treadmill.png', 'Treadmill elektrik lipat.')">Treadmill Elektrik</h3>
+        <p class="harga">RP.3.800.000</p>
+        <button class="btn-keranjang" onclick="tambahKeKeranjang('Treadmill Elektrik', 3800000)">+ Keranjang</button>
+    </div>
+</div>
+            
+            <div class="produk-card" data-kategori="olahraga">
+                <div class="img-container" onclick="bukaModal('bola basket', 125000, 'images/bola basket.png', 'Bola basket molten adalah bola yang berukuran 7 (size 7),yang cocok untuk ukuran resmi kompetisi pria dewasa.')">
+                    <img src="d:\PKL\katalog produk\images\bola basket.png" alt="Figure">
+                </div>
+                <div class="produk-info">
+                    <h3 onclick="bukaModal('bola basket', 125000, 'images/bola basket.png', 'bola basket.')">Bola Basket Molten</h3>
+                    <p class="harga">RP.125.000</p>
+                    <button class="btn-keranjang" onclick="tambahKeKeranjang('bola basket', 125000)">+ Keranjang</button>
+                </div>
+            </div>
+
+              <div class="produk-card" data-kategori="olahraga">
+                <div class="img-container" onclick="bukaModal('bola voli mikasa', 120000, 'images/bola voli.png', 'Bola voli mikasa yang enak di pakai dan terbuat dari karet premium.')">
+                    <img src="d:\PKL\katalog produk\images\bola voli.png" alt="bola voli">
+                </div>
+                <div class="produk-info">
+                    <h3 onclick="bukaModal('bola voli mikasa', 120000, 'images/bola voli.png', 'bola voli mikasa.')">Bola Voli Mikasa</h3>
+                    <p class="harga">RP.120.000</p>
+                    <button class="btn-keranjang" onclick="tambahKeKeranjang('bola voli mikasa', 120000)">+ Keranjang</button>
+                </div>
+            </div>
+
+            <div class="produk-card" data-kategori="rumah">
+                <div class="img-container" onclick="bukaModal('mangkuk kayu', 20000, 'images/mangkuk kayu.png', 'Mangkuk yang terbuat dari kayu dan anti pecah.')">
+                    <img src="d:\PKL\katalog produk\images\mangkuk kayu.png" alt="mangkuk kayu">
+                </div>
+                <div class="produk-info">
+                    <h3 onclick="bukaModal('mangkuk kayu', 20000, 'images/mangkuk kayu.png', 'mangkuk kayu.')">mangkuk kayu aesthetic</h3>
+                    <p class="harga">RP.20.000</p>
+                    <button class="btn-keranjang" onclick="tambahKeKeranjang('mangkuk kayu', 20000)">+ Keranjang</button>
+                </div>
+            </div>
+
+            <div class="produk-card" data-kategori="rumah">
+                <div class="img-container" onclick="bukaModal('panci anti lengket', 70000, 'images/panci.png', 'Panci anti lengket yang terbuat dari bahan granit marble berkualitas tinggi.')">
+                    <img src="d:\PKL\katalog produk\images\panci.png" alt="panci">
+                </div>
+                <div class="produk-info">
+                    <h3 onclick="bukaModal('panci anti lengket', 70000, 'images/panci.png', 'panci anti lengket.')">panci anti lengket</h3>
+                    <p class="harga">RP.70.000</p>
+                    <button class="btn-keranjang" onclick="tambahKeKeranjang('panci anti lengket', 70000)">+ Keranjang</button>
+                </div>
+            </div>
+
+            <div class="produk-card" data-kategori="rumah">
+                <div class="img-container" onclick="bukaModal('Piring aesthetic', 50000, 'images/piring.png', 'Piring dengan desain yang unik set 1 lusin isi 6.')">
+                    <img src="d:\PKL\katalog produk\images\piring.png" alt="piring">
+                </div>
+                <div class="produk-info">
+                    <h3 onclick="bukaModal('Piring aesthetic', 50000, 'images/piring.png', 'Piring aesthetic.')">Piring Aesthetic</h3>
+                    <p class="harga">RP.50.000</p>
+                    <button class="btn-keranjang" onclick="tambahKeKeranjang('Piring aesthetic', 50000)">+ Keranjang</button>
+                </div>
+            </div>
+
+            <div class="produk-card" data-kategori="rumah">
+                <div class="img-container" onclick="bukaModal('toples kue kering', 60000, 'images/toples.png', 'Toples set isi 4 cocok untuk tempat kue kring,kacang,permen.')">
+                    <img src="d:\PKL\katalog produk\images\toples.png" alt="Figure">
+                </div>
+                <div class="produk-info">
+                    <h3 onclick="bukaModal('toples kue kering', 60000, 'images/toples.png', 'toples kue kering.')">Toples Set Isi 4</h3>
+                    <p class="harga">RP.60.000</p>
+                    <button class="btn-keranjang" onclick="tambahKeKeranjang('toples kue kering', 60000)">+ Keranjang</button>
+                </div>
+            </div>
+
+            <div class="produk-card" data-kategori="rumah">
+                <div class="img-container" onclick="bukaModal('tumbler stainles', 120000, 'images/tumbler.png', 'Tumbler stainles yang tahan dingin dan tahan panas.')">
+                    <img src="d:\PKL\katalog produk\images\tumbler.png" alt="Figure">
+                </div>
+                <div class="produk-info">
+                    <h3 onclick="bukaModal('tumbler stainles', 120000, 'images/figure.png', 'tumbler stainles.')">Tumbler stainles 250ml</h3>
+                    <p class="harga">RP.120.000</p>
+                    <button class="btn-keranjang" onclick="tambahKeKeranjang('tumbler stainles', 120000)">+ Keranjang</button>
+                </div>
+            </div>
+
+            <div class="produk-card" data-kategori="rumah">
+                <div class="img-container" onclick="bukaModal('teflon anti lengket', 40000, 'images/teflon.png', 'Teflon anti lengket dan bahan tebal.')">
+                    <img src="d:\PKL\katalog produk\images\teflon.png" alt="Figure">
+                </div>
+                <div class="produk-info">
+                    <h3 onclick="bukaModal('teflon anti lengket', 40000, 'images/teflon.png', 'Action figure koleksi.')">Teflon</h3>
+                    <p class="harga">RP.40.000</p>
+                    <button class="btn-keranjang" onclick="tambahKeKeranjang('teflon anti lengket', 40000)">+ Keranjang</button>
+                </div>
+            </div>
+
+        
+
+            <div class="produk-card" data-kategori="sekolah">
+                <div class="img-container" onclick="bukaModal('Tas Ransel Sekolah', 180000, 'images/tas perempuan.png', 'Tas ransel punggung sekolah anak dan remaja, kapasitas besar, kuat, serta anti air.')">
+                    <img src="d:\PKL\katalog produk\images\tas perempuan.png" alt="Tas Sekolah">
+                </div>
+                <div class="produk-info">
+                    <h3 onclick="bukaModal('Tas Ransel Sekolah', 180000, 'images/tas perempuan.png', 'Tas ransel punggung.')">Tas Ransel Perempuan</h3>
+                    <p class="harga">RP.180.000</p>
+                    <button class="btn-keranjang" onclick="tambahKeKeranjang('Tas Ransel Sekolah', 180000)">+ Keranjang</button>
+                </div>
+            </div>
+
+            <div class="produk-card" data-kategori="sekolah">
+                <div class="img-container" onclick="bukaModal('Sepatu Pantofel Perempuan', 170000, 'images/sepatu pantofel.png', 'Sepatu pantofel perempuan dengan bahan yang tebal dan kuat.')">
+                    <img src="d:\PKL\katalog produk\images\sepatu pantofel.png" alt="Sepatu Pantofel">
+                </div>
+                <div class="produk-info">
+                    <h3 onclick="bukaModal('', 170000, 'images/sepatu pantofel.png', 'Sepatu Pantofel Perempuan.')">Sepatu Pantofel Perempuan</h3>
+                    <p class="harga">RP.170.000</p>
+                    <button class="btn-keranjang" onclick="tambahKeKeranjang('Sepatu Pantofel Perempuan', 170000)">+ Keranjang</button>
+                </div>
+            </div>
+
+            <div class="produk-card" data-kategori="sekolah">
+                <div class="img-container" onclick="bukaModal('Sepatu Sekolah Laki-Laki', 350000, 'images/sepatu.png', 'Sepatu sekolah laki-laki yang sangat nyaman di pakai.')">
+                    <img src="d:\PKL\katalog produk\images\sepatu.png" alt="Sepatu Sekolah">
+                </div>
+                <div class="produk-info">
+                    <h3 onclick="bukaModal('Sepatu Sekolah Laki-Laki', 350000, 'images/sepatu.png', 'Sepatu Sekolah Laki-Laki.')">Sepatu Sekolah Laki-Laki</h3>
+                    <p class="harga">RP.350.000</p>
+                    <button class="btn-keranjang" onclick="tambahKeKeranjang('Sepatu Sekolah Laki-Laki', 350000)">+ Keranjang</button>
+                </div>
+            </div>
+
+            <div class="produk-card" data-kategori="sekolah">
+                <div class="img-container" onclick="bukaModal('Pensil Warna', 350000, 'images/pensil warna.png', 'Pensil warna yang memiliki berbagai macam warna.')">
+                    <img src="d:\PKL\katalog produk\images\pensil warna.png" alt="Pensil Warna">
+                </div>
+                <div class="produk-info">
+                    <h3 onclick="bukaModal('Pensil Warna', 35000, 'images/pensil warna.png', 'Pensil Warna.')">Pensil Warna Faber Castell</h3>
+                    <p class="harga">RP.350.000</p>
+                    <button class="btn-keranjang" onclick="tambahKeKeranjang('Tas Ransel Sekolah', 350000)">+ Keranjang</button>
+                </div>
+            </div>
+
+            <div class="produk-card" data-kategori="sekolah">
+                <div class="img-container" onclick="bukaModal('Buku tulis Sekolah', 25000, 'images/bukutulis.png', 'Buku tulis untuk sekolah dengan kertas yang tidak mudah robek.')">
+                    <img src="d:\PKL\katalog produk\images\bukutulis.png" alt="Buku">
+                </div>
+                <div class="produk-info">
+                    <h3 onclick="bukaModal('Buku Tulis Sekolah', 25000, 'images/bukutulis.png', 'Buku tulis.')">Buku Tulis Sekolah</h3>
+                    <p class="harga">RP.25.000</p>
+                    <button class="btn-keranjang" onclick="tambahKeKeranjang('Buku Tulis Sekolah', 25000)">+ Keranjang</button>
+                </div>
+            </div>
+
+            <div class="produk-card" data-kategori="sekolah">
+                <div class="img-container" onclick="bukaModal('Tas Ransel Laki-Laki', 230000, 'images/tas laki.png', 'Tas ransel laki-laki dengan bahan yang tebal,lembut dan nyaman dipakai.')">
+                    <img src="d:\PKL\katalog produk\images\tas laki.png" alt="Tas ransel">
+                </div>
+                <div class="produk-info">
+                    <h3 onclick="bukaModal('Buku Tulis Pack isi 10', 45000, 'images/tas laki.png', 'Tas Ransel Laki-Laki.')">Tas sekolah laki-laki</h3>
+                    <p class="harga">RP.230.000</p>
+                    <button class="btn-keranjang" onclick="tambahKeKeranjang('tas sekolah laki-laki', 45000)">+ Keranjang</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <div id="modal-produk" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="tutupModal()">&times;</span>
+            <img id="modal-gambar" src="" alt="Gambar Produk" class="modal-img">
+            <h2 id="modal-nama">Nama Produk</h2>
+            <p id="modal-harga" style="color:#001cd2; font-weight:bold; margin-top:5px;">Harga</p>
+            <p id="modal-deskripsi" class="modal-desc">Deskripsi barang</p>
+            <button id="modal-btn-keranjang" class="btn-beli" style="background:#001cd2;">+ Masukkan Keranjang</button>
+        </div>
+    </div>
+
+    <div id="modal-keranjang-belanja" class="cart-modal">
+        <div class="cart-modal-content">
+            <span class="close-modal" onclick="tutupKeranjang()">&times;</span>
+            <h2>Keranjang Belanja Anda</h2>
+            
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #eee;">
+                <input type="checkbox" id="pilih-semua-cart" onchange="pilihSemuaProduk(this)" checked style="transform: scale(1.2); cursor: pointer;">
+                <label for="pilih-semua-cart" style="font-size: 14px; font-weight: bold; cursor: pointer; color: #333;">Pilih Semua</label>
+            </div>
+
+            <ul class="cart-list" id="daftar-belanja">
+                <li style="color: #888; border: none;">Keranjang masih kosong.</li>
+            </ul>
+            
+            <div class="total-pembayaran">
+                <span>Total Tagihan:</span>
+                <span id="total-harga">RP.0</span>
+            </div>
+
+            <div class="metode-bayar-box">
+                <label for="metode-pembayaran">Pilih Metode Pembayaran:</label>
+                <select id="metode-pembayaran">
+                    <option value="DANA / OVO / GoPay">E-Wallet (DANA, OVO, GoPay)</option>
+                    <option value="Transfer Bank BCA/Mandiri">Transfer Bank (BCA / Mandiri)</option>
+                    <option value="Alfamart / Indomaret">Alfamart / Indomaret</option>
+                </select>
+            </div>
+
+            <button class="btn-beli" onclick="prosesBeli()">Konfirmasi & Beli Sekarang</button>
+        </div>
+    </div>
+
+    <section class="kontak-section" id="kontak">
+        <h2>Kontak</h2>
+        <form class="kontak-form" id="form-pesan">
+            <input type="text" placeholder="Enter your name..." required>
+            <input type="email" placeholder="Enter your email..." required>
+            <input type="tel" placeholder="Enter your phone number..." required>
+            <textarea placeholder="Enter your message..." rows="5" required></textarea>
+            <button type="submit" class="btn-kirim">Kirim</button>
+        </form>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-lokasi">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Jl. Melati No.12, Bandung, Jawa Barat</span>
+            </div>
+            
+            <div class="footer-sosmed-group">
+                <div class="footer-item"><i class="fas fa-envelope"></i><span>ciisstore@gmail.com</span></div>
+                <div class="footer-item"><i class="fas fa-phone"></i><span>0812-3456-7890</span></div>
+                <div class="footer-item"><i class="fab fa-instagram"></i><span>cii's store official_</span></div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- EVENT ONLOAD UTAMA (Pemicu Filter Otomatis saat Web Dibuka) ---
+        // --- EVENT ONLOAD UTAMA ---
+window.onload = function() {
+    // Jalankan filter fashion secara diam-diam saat web dimuat
+    // Kita panggil nama kategorinya saja ('fashion') tanpa mengirimkan efek scroll
+    filterKategoriTipeAwal('fashion');
+    
+    // Pastikan kotak kategori Fashion di bagian atas juga terlihat aktif (berwarna biru/terpilih)
+    const katFashion = document.getElementById("kategori-fashion");
+    if(katFashion) {
+        katFashion.classList.add('active');
+    }
+};
+
+// Fungsi khusus untuk menyaring produk pertama kali TANPA otomatis scroll layar
+function filterKategoriTipeAwal(kategoriDipilih) {
+    let cards = document.getElementsByClassName('produk-card');
+
+    // Perbarui teks judul sub-section produk
+    document.getElementById('judul-produk-section').innerText = "Kategori: " + kategoriDipilih.toUpperCase();
+
+    // Saring produk: Jika cocok tampilkan, jika tidak sembunyikan
+    for (let i = 0; i < cards.length; i++) {
+        let kategoriProduk = cards[i].getAttribute('data-kategori');
+        
+        if (kategoriProduk === kategoriDipilih) {
+            cards[i].style.display = "block"; 
+        } else {
+            cards[i].style.display = "none"; 
+        }
+    }
+}
+        // --- KATEGORI SHOW/HIDE (TAMPILKAN SEMUA) ---
+        document.addEventListener("DOMContentLoaded", function() {
+            const btnTampilkan = document.getElementById("tampilkan-semua-btn");
+            const sisaKategori = document.querySelectorAll(".sisa-kategori");
+
+            btnTampilkan.addEventListener("click", function() {
+                const isHidden = sisaKategori[0].classList.contains("hidden");
+                sisaKategori.forEach(item => {
+                    if (isHidden) { item.classList.remove("hidden"); } 
+                    else { item.classList.add("hidden"); }
+                });
+                btnTampilkan.textContent = isHidden ? "Sembunyikan" : "Tampilkan semua";
+            });
+        });
+
+        // --- PENCARIAN PRODUK ---
+        // Fungsi untuk mendeteksi apakah tombol yang ditekan adalah 'Enter'
+function cekEnter(event) {
+    if (event.key === "Enter") {
+        event.preventDefault(); // Mencegah form reload jika ada
+        cariProduk(); // Jalankan fungsi pencarian
+    }
+}
+
+// Fungsi utama pencarian dan otomatis pindah halaman section
+function cariProduk() {
+    let input = document.getElementById('cari-produk-input').value.toLowerCase();
+    let cards = document.getElementsByClassName('produk-card');
+    
+    // Jika kolom pencarian kosong, tidak perlu memproses apa-apa
+    if (input.trim() === "") {
+        return;
+    }
+
+    // 1. OTOMATIS LANGSUNG MELUNCUR KE HALAMAN/SECTION PRODUK
+    document.getElementById('produk').scrollIntoView({ behavior: 'smooth' });
+
+    // 2. MENGUBAH JUDUL UTAMA MENJADI HASIL PENCARIAN
+    document.getElementById('judul-produk-section').innerText = "Hasil Pencarian: \"" + input + "\"";
+
+    // 3. MENYARING PRODUK SESUAI KATA KUNCI
+    let produkDitemukan = false;
+    for (let i = 0; i < cards.length; i++) {
+        let namaProduk = cards[i].getElementsByTagName('h3')[0].innerText.toLowerCase();
+        
+        if (namaProduk.includes(input)) {
+            cards[i].style.display = "block"; // Munculkan jika cocok
+            produkDitemukan = true;
+        } else {
+            cards[i].style.display = "none"; // Sembunyikan jika tidak cocok
+        }
+    }
+
+    // Opsional: Jika tidak ada produk yang cocok dengan pencarian
+    let infoPilih = document.getElementById('info-pilih-kategori');
+    if (infoPilih) {
+        if (!produkDitemukan) {
+            infoPilih.style.display = "block";
+            infoPilih.innerText = "Produk tidak ditemukan. Coba kata kunci lain.";
+        } else {
+            infoPilih.style.display = "none";
+        }
+    }
+}
+
+        // --- FILTER KATEGORI SANGAT KETAT ---
+        function filterKategori(kategoriDipilih, elemenKlik) {
+            let cards = document.getElementsByClassName('produk-card');
+            let itemsKategori = document.getElementsByClassName('kategori-item');
+
+            // Atur status class .active pada kotak kategori yang diklik
+            for (let i = 0; i < itemsKategori.length; i++) {
+                itemsKategori[i].classList.remove('active');
+            }
+            elemenKlik.classList.add('active');
+
+            // Perbarui teks judul sub-section produk
+            document.getElementById('judul-produk-section').innerText = "Kategori: " + kategoriDipilih.toUpperCase();
+
+            // Saring produk: Jika kategori COCOK set "block", jika TIDAK COCOK set "none"
+            for (let i = 0; i < cards.length; i++) {
+                let kategoriProduk = cards[i].getAttribute('data-kategori');
+                
+                if (kategoriProduk === kategoriDipilih) {
+                    cards[i].style.display = "block"; 
+                } else {
+                    cards[i].style.display = "none"; 
+                }
+            }
+        }
+
+        // Fungsi opsional jika user sengaja ingin melepas filter dan melihat semua isi gudang toko
+        function resetFilterKategori() {
+            let cards = document.getElementsByClassName('produk-card');
+            let itemsKategori = document.getElementsByClassName('kategori-item');
+
+            for (let i = 0; i < itemsKategori.length; i++) {
+                itemsKategori[i].classList.remove('active');
+            }
+
+            document.getElementById('judul-produk-section').innerText = "Semua Produk";
+
+            for (let i = 0; i < cards.length; i++) {
+                cards[i].style.display = "block";
+            }
+        }
+
+        // --- POP-UP MODAL DESKRIPSI DETAIL PRODUK ---
+        const modal = document.getElementById('modal-produk');
+        
+        function bukaModal(nama, harga, gambarSrc, deskripsi) {
+            document.getElementById('modal-nama').innerText = nama;
+            document.getElementById('modal-harga').innerText = "RP." + harga.toLocaleString('id-ID');
+            document.getElementById('modal-gambar').src = gambarSrc;
+            document.getElementById('modal-deskripsi').innerText = deskripsi;
+            
+            document.getElementById('modal-btn-keranjang').onclick = function() {
+                tambahKeKeranjang(nama, harga);
+                tutupModal();
+            };
+            modal.style.display = "flex";
+        }
+
+        function tutupModal() { modal.style.display = "none"; }
+
+        // --- LOGIKA TOGGLE BUKA & TUTUP POP-UP KERANJANG ---
+        const cartModal = document.getElementById('modal-keranjang-belanja');
+
+        function bukaKeranjang() { cartModal.style.display = "flex"; }
+        function tutupKeranjang() { cartModal.style.display = "none"; }
+
+        window.onclick = function(event) {
+            if (event.target == modal) { tutupModal(); }
+            if (event.target == cartModal) { tutupKeranjang(); }
+        }
+
+        // --- MANAGEMENT STRUKTUR DATA KERANJANG ---
+        // --- MANAGEMENT STRUKTUR DATA KERANJANG BARU ---
+        let keranjang = [];
+
+        function tambahKeKeranjang(namaProduk, harga) {
+            // Setiap produk baru ditambahkan, otomatis kita beri status terpilih (dipilih: true)
+            keranjang.push({ nama: namaProduk, harga: harga, dipilih: true });
+
+            document.getElementById('jumlah-keranjang').textContent = keranjang.length;
+            updateTampilanKeranjang();
+            alert(`"${namaProduk}" berhasil ditambah ke keranjang!`);
+        }
+
+        function updateTampilanKeranjang() {
+            const daftarBelanja = document.getElementById('daftar-belanja');
+            
+            if (keranjang.length === 0) {
+                daftarBelanja.innerHTML = `<li style="color: #888; border: none; justify-content: center;">Keranjang masih kosong.</li>`;
+                hitungTotalTagihan();
+                document.getElementById('pilih-semua-cart').checked = false;
+                return;
+            }
+
+            daftarBelanja.innerHTML = "";
+            
+            // Membuat baris produk lengkap dengan Checkbox dan Tombol Hapus
+            keranjang.forEach((item, index) => {
+                let li = document.createElement('li');
+                li.style.display = "flex";
+                li.style.alignItems = "center";
+                li.style.justifyContent = "space-between";
+                li.style.gap = "10px";
+
+                li.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 10px; flex-grow: 1;">
+                        <input type="checkbox" onchange="togglePilihProduk(${index})" ${item.dipilih ? 'checked' : ''} style="transform: scale(1.2); cursor: pointer;">
+                        <span style="${item.dipilih ? '' : 'text-decoration: line-through; color: #aaa;'}">${item.nama}</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <span style="font-weight: 500;">RP.${item.harga.toLocaleString('id-ID')}</span>
+                        <i class="fas fa-trash-alt" onclick="hapusDariKeranjang(${index})" style="color: red; cursor: pointer; font-size: 16px;" title="Hapus item"></i>
+                    </div>
+                `;
+                daftarBelanja.appendChild(li);
+            });
+
+            // Cek apakah semua item dicentang secara manual untuk menyesuaikan status tombol "Pilih Semua"
+            const semuaDicentang = keranjang.every(item => item.dipilih);
+            document.getElementById('pilih-semua-cart').checked = semuaDicentang;
+
+            hitungTotalTagihan();
+        }
+
+        // Fungsi saat checkbox produk satuan di klik
+        function togglePilihProduk(index) {
+            keranjang[index].dipilih = !keranjang[index].dipilih;
+            updateTampilanKeranjang();
+        }
+
+        // Fungsi saat checkbox "Pilih Semua" di klik
+        function pilihSemuaProduk(elemenMaster) {
+            keranjang.forEach(item => {
+                item.dipilih = elemenMaster.checked;
+            });
+            updateTampilanKeranjang();
+        }
+
+        // Fungsi menghitung total harga HANYA dari produk yang dicentang saja
+        function hitungTotalTagihan() {
+            const totalHargaText = document.getElementById('total-harga');
+            let total = 0;
+
+            keranjang.forEach(item => {
+                if (item.dipilih) {
+                    total += item.harga;
+                }
+            });
+
+            totalHargaText.textContent = "RP." + total.toLocaleString('id-ID');
+            return total;
+        }
+
+        // Fungsi menghapus item spesifik dari keranjang
+        function hapusDariKeranjang(index) {
+            if (confirm(`Hapus "${keranjang[index].nama}" dari keranjang?`)) {
+                keranjang.splice(index, 1); // Menghapus data pada urutan index tersebut
+                document.getElementById('jumlah-keranjang').textContent = keranjang.length;
+                updateTampilanKeranjang();
+            }
+        }
+
+        // Fungsi checkout pembelian
+        function prosesBeli() {
+            // Saring produk mana saja yang status dicentangnya aktif (true)
+            const produkDibeli = keranjang.filter(item => item.dipilih);
+            const totalBayar = hitungTotalTagihan();
+
+            if (keranjang.length === 0) {
+                alert("Keranjang anda masih kosong!");
+                return;
+            }
+            
+            if (produkDibeli.length === 0) {
+                alert("Silakan centang/pilih minimal satu produk yang ingin dibeli!");
+                return;
+            }
+
+            const metode = document.getElementById('metode-pembayaran').value;
+            
+            // Susun teks struk belanjaan untuk di tampilkan di alert
+            let detailStruk = "";
+            produkDibeli.forEach(item => {
+                detailStruk += `- ${item.nama} (RP.${item.harga.toLocaleString('id-ID')})\n`;
+            });
+
+            alert(`Pembelian Sukses!\n\nProduk yang dibeli:\n${detailStruk}\nTotal Bayar: RP.${totalBayar.toLocaleString('id-ID')}\nMetode Pembayaran: Via ${metode}.\n\nTerima kasih telah berbelanja di Cii's Store!`);
+            
+            // Bersihkan produk yang SUDAH DIBELI saja dari keranjang. Produk yang tidak dicentang tetap tersimpan aman di keranjang.
+            keranjang = keranjang.filter(item => !item.dipilih);
+            
+            document.getElementById('jumlah-keranjang').textContent = keranjang.length;
+            updateTampilanKeranjang();
+            tutupKeranjang();
+        }
+
+        // --- SUBMIT KONTAK ---
+        document.getElementById('form-pesan').addEventListener('submit', function(event) {
+            event.preventDefault();
+            alert('Pesan anda telah terkirim!');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
